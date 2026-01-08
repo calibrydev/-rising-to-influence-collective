@@ -1,69 +1,1302 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rising to Influence Collective</title>
-  <link rel="stylesheet" href="css/styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTIC - Rising to Influence Collective</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1e40af;
+            --primary-dark: #1e3a8a;
+            --secondary: #3b82f6;
+            --accent: #60a5fa;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gold: #fbbf24;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #3b82f6 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        .nav-menu a:hover {
+            opacity: 0.8;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 40%, #3b82f6 100%);
+            color: white;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 100;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            animation: fadeInUp 0.8s ease 0.2s both;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 100;
+            display: none;
+        }
+
+        .slider-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid white;
+        }
+
+        .slider-dot.active {
+            background: white;
+            transform: scale(1.3);
+        }
+
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: 3px solid white;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 100;
+            font-size: 2rem;
+            font-weight: bold;
+            backdrop-filter: blur(5px);
+        }
+
+        .slider-arrow:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateY(-50%) scale(1.15);
+        }
+
+        .slider-arrow.prev {
+            left: 30px;
+        }
+
+        .slider-arrow.next {
+            right: 30px;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            border: none;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+        }
+
+        .back-to-top.show {
+            display: flex;
+        }
+
+        /* Terms and Conditions Section */
+        .terms-section {
+            background: var(--light);
+        }
+
+        .terms-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .terms-content h3 {
+            color: var(--primary);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .terms-content h3:first-child {
+            margin-top: 0;
+        }
+
+        .terms-content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .terms-content ol li {
+            margin-bottom: 0.75rem;
+            line-height: 1.7;
+        }
+
+        .terms-content ul {
+            list-style: none;
+            margin-left: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .terms-content ul li {
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            position: relative;
+            line-height: 1.7;
+        }
+
+        .terms-content ul li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .terms-content p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .terms-content strong {
+            color: var(--dark);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: var(--dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            font-size: 1.125rem;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .about-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .about-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .about-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Values Section */
+        #values {
+            background: var(--light);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .value-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .value-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .value-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Pillars Section */
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .pillar-card {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            transition: transform 0.3s;
+        }
+
+        .pillar-card:hover {
+            transform: scale(1.05);
+        }
+
+        .pillar-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Programs Section */
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .program-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            word-wrap: break-word;
+        }
+
+        .program-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .program-header {
+            background: linear-gradient(135deg, #00b894 0%, #1e88a8 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .program-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .program-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .program-body {
+            padding: 2rem;
+            overflow-wrap: break-word;
+        }
+
+        .program-body h4 {
+            color: #00b894;
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+        }
+
+        .program-body ul {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .program-body li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        .program-body li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #00b894;
+            font-weight: bold;
+        }
+
+        .program-footer {
+            padding: 0 2rem 2rem;
+            display: none;
+        }
+
+        .program-schedule {
+            background: #f0fdf4;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #00b894;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .program-schedule strong {
+            color: #00b894;
+        }
+
+        /* Membership Section */
+        #membership {
+            background: var(--light);
+        }
+
+        .membership-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .membership-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--primary);
+            transition: all 0.3s;
+        }
+
+        .membership-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .membership-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .membership-card .price {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 1rem 0;
+        }
+
+        .membership-card ul {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .membership-card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .membership-card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Contact Section */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--primary-dark);
+                flex-direction: column;
+                padding: 1rem 2rem;
+                gap: 1rem;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .slider-arrow {
+                width: 45px;
+                height: 45px;
+                font-size: 1.5rem;
+            }
+
+            .slider-arrow.prev {
+                left: 15px;
+            }
+
+            .slider-arrow.next {
+                right: 15px;
+                display: none;
+            }
+
+            .slider-dots {
+                bottom: 25px;
+                display: none;
+            }
+
+            .hero-content {
+                padding: 0;
+            }
+
+            .back-to-top {
+                width: 45px;
+                height: 45px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 1.3rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <div class="container nav-container">
-      <img src="assets/logo.jpg" alt="RTI Logo" class="logo"/>
-      <nav id="nav">
-        <ul class="nav-links">
-          <li><a href="index.html" class="active">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="programs.html">Programs</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
-      <div class="menu-toggle" id="menu-toggle">&#9776;</div>
-    </div>
-  </header>
-
-  <section class="hero">
-    <div class="container">
-      <h1>Rising to Influence Collective</h1>
-      <p>Empowering individuals and communities to discover, activate, and live their purpose.</p>
-      <a href="programs.html" class="btn">Explore Our Programs</a>
-    </div>
-  </section>
-
-  <section class="highlights">
-    <div class="container">
-      <h2>What We Do</h2>
-      <div class="cards">
-        <div class="card">
-          <h3>Purpose Discovery</h3>
-          <p>Helping individuals discover their gifts and calling through mentorship and training.</p>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="assets/logo.jpg" alt="RTI Logo" class="logo"/>
+                <span>RTIfC</span>
+            </div>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#values">Values</a></li>
+                <li><a href="#pillars">Pillars</a></li>
+                <li><a href="#programs">Programs</a></li>
+                <li><a href="#membership">Membership</a></li>
+                <li><a href="#terms">Terms & Conditions</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
         </div>
-        <div class="card">
-          <h3>Community Building</h3>
-          <p>We create communities where influence, leadership, and growth are nurtured.</p>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-slider">
+            <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1920&h=1080&fit=crop&q=90');">
+            </div>
+            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&h=1080&fit=crop&q=90');">
+            </div>
+            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1920&h=1080&fit=crop&q=90');">
+            </div>
+            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=1920&h=1080&fit=crop&q=90');">
+            </div>
         </div>
-        <div class="card">
-          <h3>Leadership Programs</h3>
-          <p>Workshops, events, and initiatives that develop leaders for impact.</p>
+        
+        <div class="hero-content">
+            <h1>Rising to Influence Collective</h1>
+            <p>Empowering young individuals with responsibility and purpose to become positive influencers who create meaningful impact in the world</p>
+            <div class="cta-buttons">
+                <a href="#membership" class="btn btn-primary">Become a Member</a>
+                <a href="#about" class="btn btn-secondary">Learn More</a>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 Rising to Influence Collective. All rights reserved.</p>
-    </div>
-  </footer>
-<script>
-  const toggleBtn = document.getElementById("menu-toggle");
-const navLinks = document.querySelector(".nav-links");
+        <button class="slider-arrow prev" onclick="changeSlide(-1)">‹</button>
+        <button class="slider-arrow next" onclick="changeSlide(1)">›</button>
+        
+        <div class="slider-dots">
+            <span class="slider-dot active" onclick="goToSlide(0)"></span>
+            <span class="slider-dot" onclick="goToSlide(1)"></span>
+            <span class="slider-dot" onclick="goToSlide(2)"></span>
+            <span class="slider-dot" onclick="goToSlide(3)"></span>
+        </div>
+    </section>
 
-toggleBtn.addEventListener("click", () => {
-  navLinks.classList.toggle("open");
-});
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">Who We Are</h2>
+            <p class="section-subtitle">Rising to Influence is dedicated to empowering young individuals through education, mentorship, and valuable knowledge</p>
+            
+            <div class="about-content">
+                <div class="about-card">
+                    <h3>Our Purpose</h3>
+                    <p>To equip and inspire young people with the knowledge, skills, and mentorship they need to become positive influencers, driving meaningful change in their communities and fields of influence.</p>
+                </div>
+                <div class="about-card">
+                    <h3>Our Vision</h3>
+                    <p>To see a generation empowered with responsibility and purpose rising as positive influencers.</p>
+                </div>
+                <div class="about-card">
+                    <h3>Our Mission</h3>
+                    <p>We cultivate leadership, personal growth, and a strong sense of purpose, enabling individuals to rise as impactful leaders in their respective domains.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-</script>
-  <script src="js/script.js"></script>
+    <!-- Values Section -->
+    <section id="values">
+        <div class="container">
+            <h2 class="section-title">Our Core Values</h2>
+            <p class="section-subtitle">Non-negotiable principles that guide our behavior, leadership, and culture</p>
+            
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">E</div>
+                    <h3>Excellence</h3>
+                    <p>We pursue quality, discipline, and intentionality in everything we do</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">T</div>
+                    <h3>Teamwork</h3>
+                    <p>Impact is multiplied through collaboration, unity, and shared responsibility</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">I</div>
+                    <h3>Innovation</h3>
+                    <p>We remain adaptive, creative, and forward-thinking in solving problems</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">I</div>
+                    <h3>Integrity</h3>
+                    <p>We uphold moral uprightness, transparency, and faith-consistent conduct</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">S</div>
+                    <h3>Stewardship</h3>
+                    <p>We responsibly manage people, time, resources, and influence entrusted to us</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">R</div>
+                    <h3>Responsibility</h3>
+                    <p>We take ownership of our growth, actions, commitments, and leadership</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pillars Section -->
+    <section id="pillars">
+        <div class="container">
+            <h2 class="section-title">Our Core Pillars</h2>
+            <p class="section-subtitle">Areas of development and formation that drive our impact</p>
+            
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <h3>Purpose & Identity</h3>
+                    <p>Focuses on purpose discovery, identity formation, and life direction</p>
+                </div>
+                <div class="pillar-card">
+                    <h3>Leadership Development</h3>
+                    <p>Develops values-based, responsible leaders with character and influence</p>
+                </div>
+                <div class="pillar-card">
+                    <h3>Education, Knowledge & Skills</h3>
+                    <p>Promotes structured learning, intellectual growth, and skill development</p>
+                </div>
+                <div class="pillar-card">
+                    <h3>Mental Health & Inner Life</h3>
+                    <p>Addresses emotional, psychological, and inner-life wellbeing from a holistic perspective</p>
+                </div>
+                <div class="pillar-card">
+                    <h3>Career, Business & Finance</h3>
+                    <p>Equips members for professional excellence, entrepreneurship, and financial stewardship</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section id="programs">
+        <div class="container">
+            <h2 class="section-title">Our Programs</h2>
+            <p class="section-subtitle">Structured pathways for growth, learning, and development across various areas of life</p>
+            
+            <div class="programs-grid">
+                <div class="program-card">
+                    <div class="program-header">
+                        <h3>Book Club</h3>
+                        <p>Intellectual Growth Through Reading</p>
+                    </div>
+                    <div class="program-body">
+                        <h4>Program Overview</h4>
+                        <p>Our Book Club brings together members who are passionate about reading and intellectual growth. We explore books across leadership, personal development, faith, business, and more.</p>
+                        
+                        <h4>What to Expect</h4>
+                        <ul>
+                            <li>Monthly book selections across diverse topics</li>
+                            <li>Engaging group discussions and insights</li>
+                            <li>Access to reading materials and resources</li>
+                            <li>Connection with like-minded readers</li>
+                            <li>Development of critical thinking skills</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-header">
+                        <h3>Discipleship Program</h3>
+                        <p>Spiritual Growth & Formation</p>
+                    </div>
+                    <div class="program-body">
+                        <h4>Program Overview</h4>
+                        <p>An optional faith-based program focused on spiritual formation, biblical teaching, and developing a deeper relationship with God through intentional discipleship.</p>
+                        
+                        <h4>What to Expect</h4>
+                        <ul>
+                            <li>Biblical teaching and spiritual formation</li>
+                            <li>Small group discipleship sessions</li>
+                            <li>Prayer and worship gatherings</li>
+                            <li>Mentorship in spiritual growth</li>
+                            <li>Integration of faith with daily life</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-header">
+                        <h3>Purpose Pathfinder</h3>
+                        <p>Discover Your Calling & Direction</p>
+                    </div>
+                    <div class="program-body">
+                        <h4>Program Overview</h4>
+                        <p>A transformative journey designed to help young people discover their purpose, clarify their identity, and chart a meaningful direction for their lives.</p>
+                        
+                        <h4>What to Expect</h4>
+                        <ul>
+                            <li>Purpose discovery workshops and assessments</li>
+                            <li>Identity formation sessions</li>
+                            <li>One-on-one mentorship and guidance</li>
+                            <li>Life direction mapping and planning</li>
+                            <li>Community support and accountability</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-header">
+                        <h3>Financial Literacy Training</h3>
+                        <p>Building Financial Wisdom & Stewardship</p>
+                    </div>
+                    <div class="program-body">
+                        <h4>Program Overview</h4>
+                        <p>Practical training in personal finance, budgeting, saving, investing, and financial stewardship to help members achieve financial freedom and make wise financial decisions.</p>
+                        
+                        <h4>What to Expect</h4>
+                        <ul>
+                            <li>Personal budgeting and money management</li>
+                            <li>Saving and investment strategies</li>
+                            <li>Understanding credit and debt management</li>
+                            <li>Entrepreneurship and business basics</li>
+                            <li>Long-term financial planning</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-header">
+                        <h3>Leadership Training</h3>
+                        <p>Developing Values-Based Leaders</p>
+                    </div>
+                    <div class="program-body">
+                        <h4>Program Overview</h4>
+                        <p>Comprehensive leadership development program focused on building character, influence, and practical leadership skills for young emerging leaders.</p>
+                        
+                        <h4>What to Expect</h4>
+                        <ul>
+                            <li>Leadership principles and character development</li>
+                            <li>Team building and collaboration skills</li>
+                            <li>Decision-making and problem-solving</li>
+                            <li>Communication and public speaking</li>
+                            <li>Practical leadership opportunities</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-header">
+                        <h3>Digital Skills Training</h3>
+                        <p>Empowering Digital Competence</p>
+                    </div>
+                    <div class="program-body">
+                        <h4>Program Overview</h4>
+                        <p>Practical training in essential digital skills including computer literacy, digital marketing, content creation, and technology tools for the modern world.</p>
+                        
+                        <h4>What to Expect</h4>
+                        <ul>
+                            <li>Computer and internet fundamentals</li>
+                            <li>Social media management and strategy</li>
+                            <li>Content creation and digital design</li>
+                            <li>Online collaboration tools</li>
+                            <li>Digital safety and online presence</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-header">
+                        <h3>Mental Health Awareness</h3>
+                        <p>Holistic Wellbeing & Inner Life</p>
+                    </div>
+                    <div class="program-body">
+                        <h4>Program Overview</h4>
+                        <p>Educational sessions and support focused on mental health awareness, emotional wellbeing, stress management, and creating a healthy inner life.</p>
+                        
+                        <h4>What to Expect</h4>
+                        <ul>
+                            <li>Understanding mental health basics</li>
+                            <li>Stress and anxiety management techniques</li>
+                            <li>Building emotional resilience</li>
+                            <li>Self-care and healthy boundaries</li>
+                            <li>Access to support and resources</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Section -->
+    <section id="membership">
+        <div class="container">
+            <h2 class="section-title">Membership Categories</h2>
+            <p class="section-subtitle">Choose the membership level that fits your journey with RTIC</p>
+            
+            <div class="membership-grid">
+                <div class="membership-card">
+                    <h3>Ordinary Member</h3>
+                    <p class="price">Free</p>
+                    <ul>
+                        <li>Access to mentorship forums</li>
+                        <li>General events access</li>
+                        <li>Exposure to RTIC vision</li>
+                        <li>Group mentoring sessions</li>
+                    </ul>
+                </div>
+                <div class="membership-card">
+                    <h3>Registered Member</h3>
+                    <p class="price">KSh 300</p>
+                    <ul>
+                        <li>Certificate of membership</li>
+                        <li>Full program participation</li>
+                        <li>Leadership pathways</li>
+                        <li>Holistic mentorship access</li>
+                        <li>Resource library access</li>
+                        <li>Networking opportunities</li>
+                    </ul>
+                </div>
+                <div class="membership-card">
+                    <h3>Premium Member</h3>
+                    <p class="price">KSh 1,000 - 1,500</p>
+                    <ul>
+                        <li>All Registered benefits</li>
+                        <li>Membership kit (T-shirt & cap)</li>
+                        <li>Discounted event prices</li>
+                        <li>Free members-only content</li>
+                        <li>Priority registration</li>
+                        <li>Annual renewal required</li>
+                    </ul>
+                </div>
+                <div class="membership-card">
+                    <h3>Volunteer</h3>
+                    <p class="price">Service-Based</p>
+                    <ul>
+                        <li>Service opportunities</li>
+                        <li>Recognition for service</li>
+                        <li>Program exposure</li>
+                        <li>Pathway to membership</li>
+                        <li>Experience & growth</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="https://forms.gle/Xx5ZPk2zgmuNKgUm8" target="_blank" class="btn btn-primary" style="font-size: 1.125rem; padding: 1rem 3rem; display: inline-block;">
+                    Become a Member
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Terms & Conditions Section -->
+    <section id="terms" class="terms-section">
+        <div class="container">
+            <h2 class="section-title">Terms & Conditions</h2>
+            <p class="section-subtitle">Membership guidelines and organizational policies</p>
+            
+            <div class="terms-content">
+                <h3>Membership Terms & Conditions</h3>
+                <ol>
+                    <li>Membership categories are distinct with defined rights and responsibilities.</li>
+                    <li>Registration fee for Registered membership is non-refundable; Premium is renewable annually.</li>
+                    <li>All members and associates must uphold RTIC's values: clarity, stewardship, and professional excellence.</li>
+                    <li>Members and associates must maintain confidentiality of RTIC's intellectual property and communication standards.</li>
+                    <li>Certificates are issued only to Registered members upon completion of training.</li>
+                    <li>Volunteers do not hold membership rights unless registered.</li>
+                    <li>Partners are recognized but have no voting rights or certificates.</li>
+                    <li>RTIC may revoke membership or affiliation for misconduct or breach of confidentiality.</li>
+                    <li>Personal and organizational data will be used in compliance with applicable laws.</li>
+                    <li>Members must adhere to organizational policies and participate in events according to guidelines.</li>
+                </ol>
+
+                <h3>Values & Conduct</h3>
+                <ul>
+                    <li>RTIC encourages Christian values while welcoming diverse beliefs in a respectful, inclusive manner</li>
+                    <li>Members are expected to adhere to all organizational policies at departmental and program levels</li>
+                </ul>
+
+                <h3>Exiting Process</h3>
+                <ul>
+                    <li>Members wishing to leave must notify the secretary</li>
+                    <li>Surveys may be conducted to record reasons for leaving</li>
+                    <li>Prolonged inactivity may be considered as voluntary exit</li>
+                </ul>
+
+                <h3>Member Participation & Access</h3>
+                <p><strong>Membership in RTIC provides access, not obligation.</strong></p>
+                <ul>
+                    <li>Members may participate in programs offered under any pillar or department according to their interest, readiness, and season of life.</li>
+                    <li>Participation is voluntary, not compulsory.</li>
+                    <li>Faith-based programs (such as discipleship) are optional, while neutral programs (such as book clubs, leadership development, or career sessions) are open to all members who align with RTIC's values and conduct.</li>
+                </ul>
+                <p>RTIC respects that growth is personal, paced, and purposeful, not uniform.</p>
+
+                <h3>Volunteering & Contribution</h3>
+                <p>Beyond program participation, members are encouraged to contribute through service.</p>
+                <ul>
+                    <li>Members may volunteer within programs, departments, or community initiatives.</li>
+                    <li>Volunteers serve under the guidance of leaders and are supported through structured coordination and care.</li>
+                    <li>Volunteering is viewed as a pathway for growth, responsibility, and leadership development, not just task completion.</li>
+                </ul>
+                <p>Volunteers are embedded across RTIC and coordinated through the Secretariat, ensuring dignity, accountability, and support.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">Join us in empowering the next generation of positive influencers</p>
+            
+            <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="_replyto" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                <p style="text-align: center; margin-top: 1.5rem; font-size: 0.95rem;">
+                    Or register as a member: <a href="https://forms.gle/Xx5ZPk2zgmuNKgUm8" target="_blank" style="color: var(--primary); font-weight: 600;">Click here to register</a>
+                </p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About RTIC</h3>
+                <p>Rising to Influence Collective is dedicated to empowering young individuals with responsibility and purpose to become positive influencers.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#values">Core Values</a></li>
+                    <li><a href="#pillars">Our Pillars</a></li>
+                    <li><a href="#membership">Membership</a></li>
+                    <li><a href="#terms">Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Our Programs</h3>
+                <ul>
+                    <li><a href="#programs">Book Club</a></li>
+                    <li><a href="#programs">Discipleship Program</a></li>
+                    <li><a href="#programs">Purpose Pathfinder</a></li>
+                    <li><a href="#pillars">View All Pillars</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul>
+                    <li>Email: risingtoinfluence@gmail.com</li>
+                    <li><a href="https://forms.gle/Xx5ZPk2zgmuNKgUm8" target="_blank">Register as Member</a></li>
+                    <li>Follow us on social media</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Rising to Influence Collective. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            menu.classList.toggle('active');
+        }
+
+        // Back to Top functionality
+        const backToTopButton = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Close mobile menu if open
+                    document.getElementById('navMenu').classList.remove('active');
+                }
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('nav');
+            const menu = document.getElementById('navMenu');
+            const toggle = document.querySelector('.menu-toggle');
+            
+            if (!nav.contains(event.target) && menu.classList.contains('active')) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
 </body>
 </html>
